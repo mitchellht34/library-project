@@ -82,8 +82,8 @@ class Books(Resource):
 
     def post(self):
         new_record = Book(
-            title=request.form['title'],
-            author=request.form['author'],
+            title=request.get_json()['title'],
+            author=request.get_json()['author'],
         )
 
         db.session.add(new_record)
