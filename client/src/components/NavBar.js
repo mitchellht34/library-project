@@ -24,6 +24,12 @@ function NavBar() {
       >
         Books
       </NavLink>
+      <NavLink
+        to="/rentals"
+        style={{ marginRight: "10px" }}
+      >
+        Rentals
+      </NavLink>
     </div>
   );
 }

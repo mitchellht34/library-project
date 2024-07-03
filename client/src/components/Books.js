@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -7,9 +8,15 @@ function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, re
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
 
+  const history = useHistory();
+
   function handleBookClick(book){
     setSelectedBook(book)
     console.log(book)
+  }
+
+  function updateBook(book){
+    history.push(`books/${book.id}`)
   }
 
   const formSchema = yup.object().shape({
@@ -74,6 +81,7 @@ function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, re
             <div className="list">
                 <li key={i}>{book.title}, {book.author}</li>
                 <button onClick={() => handleBookClick(book)}>{book === selectedBook ? "Book Chosen!" : "Select Book"}</button>
+                <button onClick={() => updateBook(book)}>Edit Book</button>
                 <br/>
                 <br/>
             </div>

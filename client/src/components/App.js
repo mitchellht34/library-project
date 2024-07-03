@@ -4,11 +4,13 @@ import NavBar from "./NavBar";
 import Users from "./Users";
 import Books from "./Books";
 import Rentals from "./Rentals";
+import BookUpdate from "./BookUpdate";
 
 function App() {
 
   const [users, setUsers] = useState([{}]);
   const [books, setBooks] = useState([{}]);
+  const [rentals, setRentals] = useState([{}]);
   const [selectedUser, setSelectedUser] = useState("")
   const [selectedBook, setSelectedBook] = useState("")
   const [refreshPage, setRefreshPage] = useState(false);
@@ -34,6 +36,16 @@ function App() {
       });
   }, [refreshPage]);
 
+  useEffect(() => {
+    console.log("FETCH! ");
+    fetch("http://127.0.0.1:5555/rentals")
+    .then((res) => res.json())
+    .then((data) => {
+      setRentals(data);
+      console.log("rentals",data);
+    });
+  }, [refreshPage]);
+
   return (
     <div>
       <BrowserRouter >
@@ -49,7 +61,10 @@ function App() {
             <Books books={books} setBooks={setBooks} selectedUser={selectedUser} selectedBook={selectedBook} setSelectedBook={setSelectedBook} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
           </Route>
           <Route path="/rentals">
-            <Rentals />
+            <Rentals rentals={rentals} setRentals={setRentals} selectedUser={selectedUser} selectedBook={selectedBook} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
+          </Route>
+          <Route path="/book/:bookId">
+            <BookUpdate />
           </Route>
         </Switch>
       </BrowserRouter>

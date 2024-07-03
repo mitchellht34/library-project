@@ -171,9 +171,9 @@ class Rentals(Resource):
 
     def post(self):
         new_record = Rental(
-            copies=request.get_json['copies'],
-            user_id=request.get_json['user_id'],
-            book_id=request.get_json['book_id'],
+            copies=request.get_json()['copies'],
+            user_id=request.get_json()['user_id'],
+            book_id=request.get_json()['book_id'],
         )
 
         db.session.add(new_record)

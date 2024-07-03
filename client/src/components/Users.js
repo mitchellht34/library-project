@@ -26,7 +26,7 @@ function Users({users, setUsers, selectedUser, setSelectedUser, refreshPage, set
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values, null, 2),
+          body: JSON.stringify(values),
         }).then((res) => {
           if (res.status == 201) {
             setRefreshPage(!refreshPage);
