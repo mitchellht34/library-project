@@ -58,6 +58,53 @@ class UserByID(Resource):
 
 api.add_resource(UserByID, '/users/<int:id>')
 
+class Books(Resource):
+
+    def get(self):
+
+        response_dict_list = [book.to_dict() for book in Book.query.all()]
+
+        response = make_response(
+            response_dict_list,
+            200,
+        )
+
+        return response
+
+    def post(self):
+        new_record = Book(
+            title=request.form['title'],
+            author=request.form['author'],
+        )
+
+        db.session.add(new_record)
+        db.session.commit()
+
+        response_dict = new_record.to_dict()
+
+        response = make_response(
+            response_dict,
+            201,
+        )
+
+        return response
+
+api.add_resource(Books, '/books')
+
+class BookByID(Resource):
+
+    def get(self, id):
+
+        response_dict = Book.query.filter_by(id=id).first().to_dict()
+
+        response = make_response(
+            response_dict,
+            200,
+        )
+
+        return response
+
+api.add_resource(BookByID, '/books/<int:id>')
 
 
 
