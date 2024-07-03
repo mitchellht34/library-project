@@ -19,6 +19,17 @@ function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, re
     history.push(`book/${book.id}`)
   }
 
+  function deleteBook(book){
+    fetch(`http://127.0.0.1:5555/books/${book.id}`, {
+        method: "DELETE",
+    })
+    .then((res) => {
+        if (res.status == 200) {
+          setRefreshPage(!refreshPage);
+        }
+    })
+  }
+
   const formSchema = yup.object().shape({
     title: yup.string().required("Must enter a title").max(40),
     author: yup.string().required("Must enter an author").max(20)
@@ -82,6 +93,7 @@ function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, re
                 <li key={i}>{book.title}, {book.author}</li>
                 <button onClick={() => handleBookClick(book)}>{book === selectedBook ? "Book Chosen!" : "Select Book"}</button>
                 <button onClick={() => updateBook(book)}>Edit Book</button>
+                <button onClick={() => deleteBook(book)}>Delete Book</button>
                 <br/>
                 <br/>
             </div>

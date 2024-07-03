@@ -9,8 +9,8 @@ function BookUpdate({books, setBooks, selectedUser, selectedBook, setSelectedBoo
     let { bookId } = useParams()
 
     const formSchema = yup.object().shape({
-        title: yup.string().required("Must enter a title").max(40),
-        author: yup.string().required("Must enter an author").max(20)
+        title: yup.string(),
+        author: yup.string()
       });
     
       const formik = useFormik({
@@ -20,14 +20,27 @@ function BookUpdate({books, setBooks, selectedUser, selectedBook, setSelectedBoo
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("http://127.0.0.1:5555/books", {
-              method: "POST",
+            let newValue = {};
+            if(values.title){
+                newValue = {
+                    ...newValue, 
+                    title: values.title
+                }
+            }
+            if(values.author){
+                newValue = {
+                    ...newValue,
+                    author: values.author
+                }
+            }
+            fetch(`http://127.0.0.1:5555/books/${bookId}`, {
+              method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(values, null, 2),
+              body: JSON.stringify(newValue),
             }).then((res) => {
-              if (res.status == 201) {
+              if (res.status == 200) {
                 setRefreshPage(!refreshPage);
                 formik.resetForm()
             }
