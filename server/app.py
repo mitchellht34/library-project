@@ -28,7 +28,7 @@ class Users(Resource):
         return response
 
     def post(self):
-        # print(request.get_json()['name'])
+
         new_record = User(name=request.get_json()['name'])
 
         db.session.add(new_record)
@@ -82,8 +82,8 @@ class Books(Resource):
 
     def post(self):
         new_record = Book(
-            title=request.get_json()['title'],
-            author=request.get_json()['author'],
+            title=request.form['title'],
+            author=request.form['author'],
         )
 
         db.session.add(new_record)
