@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function Books({books, setBooks, selectedUser, refreshPage, setRefreshPage}) {
+function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, refreshPage, setRefreshPage}) {
 
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
+
+  function handleBookClick(book){
+    setSelectedBook(book)
+    console.log(book)
+  }
 
   const formSchema = yup.object().shape({
     title: yup.string().required("Must enter a title").max(40),
@@ -61,26 +66,19 @@ function Books({books, setBooks, selectedUser, refreshPage, setRefreshPage}) {
 
         <button type="submit">Submit</button>
       </form>
-      <table style={{ padding: "15px" }}>
-        <tbody>
-          <tr>
-            <th>title</th>
-            <th>author</th>
-          </tr>
-          {books === "undefined" ? (
-            <p>Loading</p>
-          ) : (
-            books.map((book, i) => (
-              <>
-                <tr key={i}>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                </tr>
-              </>
-            ))
-          )}
-        </tbody>
-      </table>
+      <h3>Title, Author</h3>
+      {books === "undefined" ? (
+        <p>Loading</p>
+      ) : (
+        books.map((book, i) => (
+            <div className="list">
+                <li key={i}>{book.title}, {book.author}</li>
+                <button onClick={() => handleBookClick(book)}>{book === selectedBook ? "Book Chosen!" : "Select Book"}</button>
+                <br/>
+                <br/>
+            </div>
+        ))
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ function App() {
   const [users, setUsers] = useState([{}]);
   const [books, setBooks] = useState([{}]);
   const [selectedUser, setSelectedUser] = useState("")
+  const [selectedBook, setSelectedBook] = useState("")
   const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function App() {
             <Users users={users} setUsers={setUsers} selectedUser={selectedUser} setSelectedUser={setSelectedUser} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
           </Route>
           <Route path="/books">
-            <Books books={books} setBooks={setBooks} selectedUser={selectedUser} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
+            <Books books={books} setBooks={setBooks} selectedUser={selectedUser} selectedBook={selectedBook} setSelectedBook={setSelectedBook} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
           </Route>
           <Route path="/rentals">
             <Rentals />

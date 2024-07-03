@@ -61,8 +61,7 @@ function Users({users, setUsers, selectedUser, setSelectedUser, refreshPage, set
         users.map((user, i) => (
             <div className="list">
                 <li key={i}>{user.name}</li>
-                {/* {user === selectedUser ? <p>True</p> : <p>False</p>} */}
-                <button onClick={() => handleUserClick(user)}>{user === selectedUser ? "Logged In!" : "Select User"}</button>
+                <button onClick={() => handleUserClick(user)}>{user === selectedUser ? "User Chosen!" : "Select User"}</button>
                 <br/>
                 <br/>
             </div>

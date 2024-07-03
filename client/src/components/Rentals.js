@@ -13,18 +13,6 @@ function Rentals() {
 
   useEffect(() => {
     console.log("FETCH! ");
-    fetch("http://127.0.0.1:5555/books")
-      .then((res) => res.json())
-      .then((data) => {
-        setBooks(data);
-        console.log("books", data);
-      });
-    fetch("http://127.0.0.1:5555/users")
-    .then((res) => res.json())
-    .then((data) => {
-    setUsers(data);
-    console.log("users", data);
-    });
     fetch("http://127.0.0.1:5555/rentals")
     .then((res) => res.json())
     .then((data) => {
@@ -76,7 +64,19 @@ function Rentals() {
 
         <button type="submit">Submit</button>
       </form>
-      <table style={{ padding: "15px" }}>
+      <h3>Rentals</h3>
+      {rentals === "undefined" ? (
+        <p>Loading</p>
+      ) : (
+        rentals.map((rental, i) => (
+            <div className="list">
+                <li key={i}>{rental.user.name} rented {rental.copies} {rental.copies > 1 ? "copies" : "copy"} of {rental.book.title}</li>
+                <br/>
+                <br/>
+            </div>
+        ))
+      )}
+      {/* <table style={{ padding: "15px" }}>
         <tbody>
           <tr>
             <th>copies</th>
@@ -93,7 +93,7 @@ function Rentals() {
             ))
           )}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }
