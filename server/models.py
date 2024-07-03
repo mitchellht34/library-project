@@ -51,9 +51,9 @@ class Rental(db.Model, SerializerMixin):
 
     @validates('copies')
     def validate_copies(self, key, copies):
-        if copies < 1:
+        if int(copies) < 1:
             raise ValueError('Must rent at least 1 copy')
-        if copies > 100:
+        if int(copies) > 100:
             raise ValueError('Cannot rent more than 100 copies')
         return copies
 

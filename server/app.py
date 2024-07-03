@@ -106,6 +106,55 @@ class BookByID(Resource):
 
 api.add_resource(BookByID, '/books/<int:id>')
 
+class Rentals(Resource):
+
+    def get(self):
+
+        response_dict_list = [rental.to_dict() for rental in Rental.query.all()]
+
+        response = make_response(
+            response_dict_list,
+            200,
+        )
+
+        return response
+
+    def post(self):
+        new_record = Rental(
+            copies=request.form['copies'],
+            rental_date=request.form['rental_date'],
+            user_id=request.form['user_id'],
+            book_id=request.form['book_id'],
+        )
+
+        db.session.add(new_record)
+        db.session.commit()
+
+        response_dict = new_record.to_dict()
+
+        response = make_response(
+            response_dict,
+            201,
+        )
+
+        return response
+
+api.add_resource(Rentals, '/rentals')
+
+class RentalByID(Resource):
+
+    def get(self, id):
+
+        response_dict = Rental.query.filter_by(id=id).first().to_dict()
+
+        response = make_response(
+            response_dict,
+            200,
+        )
+
+        return response
+
+api.add_resource(RentalByID, '/rentals/<int:id>')
 
 
 if __name__ == '__main__':
