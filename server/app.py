@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request, make_response
 from flask_restful import Resource
+from werkzeug.exceptions import NotFound
 
 # Local imports
 from config import app, db, api
@@ -47,11 +48,18 @@ class UserByID(Resource):
 
     def get(self, id):
 
-        response_dict = User.query.filter_by(id=id).first().to_dict()
+        user = User.query.filter_by(id=id).first()
+        
+        if user:
+            response_dict = user.to_dict()
+            code = 200
+        else:
+            response_dict = {"message": "User not found"}
+            code = 404
 
         response = make_response(
             response_dict,
-            200,
+            code,
         )
 
         return response
@@ -95,11 +103,52 @@ class BookByID(Resource):
 
     def get(self, id):
 
-        response_dict = Book.query.filter_by(id=id).first().to_dict()
+        book = Book.query.filter_by(id=id).first()
+        
+        if book:
+            response_dict = book.to_dict()
+            code = 200
+        else:
+            response_dict = {"message": "Book not found"}
+            code = 404
 
         response = make_response(
             response_dict,
-            200,
+            code,
+        )
+
+        return response
+
+    def patch(self, id):
+
+        record = Book.query.filter_by(id=id).first()
+        for attr in request.form:
+            setattr(record, attr, request.form[attr])
+
+        db.session.add(record)
+        db.session.commit()
+
+        response_dict = record.to_dict()
+
+        response = make_response(
+            response_dict,
+            200
+        )
+
+        return response
+
+    def delete(self, id):
+
+        record = Book.query.filter_by(id=id).first()
+
+        db.session.delete(record)
+        db.session.commit()
+
+        response_dict = {"message": "record successfully deleted"}
+
+        response = make_response(
+            response_dict,
+            200
         )
 
         return response
@@ -144,16 +193,35 @@ class RentalByID(Resource):
 
     def get(self, id):
 
-        response_dict = Rental.query.filter_by(id=id).first().to_dict()
+        rental = Rental.query.filter_by(id=id).first()
+        
+        if rental:
+            response_dict = rental.to_dict()
+            code = 200
+        else:
+            response_dict = {"message": "Book not found"}
+            code = 404
 
         response = make_response(
             response_dict,
-            200,
+            code,
         )
 
         return response
 
 api.add_resource(RentalByID, '/rentals/<int:id>')
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+
+    response = make_response(
+        "Not Found: The requested resource does not exist.",
+        404
+    )
+
+    return response
+
+app.register_error_handler(404, handle_not_found)
 
 
 if __name__ == '__main__':
