@@ -28,7 +28,8 @@ class Users(Resource):
         return response
 
     def post(self):
-        new_record = User(name=request.form['name'])
+        # print(request.get_json()['name'])
+        new_record = User(name=request.get_json()['name'])
 
         db.session.add(new_record)
         db.session.commit()
