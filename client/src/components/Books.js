@@ -16,7 +16,7 @@ function Books({books, setBooks, selectedUser, selectedBook, setSelectedBook, re
   }
 
   function updateBook(book){
-    history.push(`books/${book.id}`)
+    history.push(`book/${book.id}`)
   }
 
   const formSchema = yup.object().shape({
