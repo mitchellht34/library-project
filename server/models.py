@@ -8,7 +8,8 @@ from config import db
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-rental.user',)
+    # serialize_only = ('id', 'name')
+    serialize_rules = ('-rentals.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
