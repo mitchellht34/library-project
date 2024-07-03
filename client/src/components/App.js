@@ -64,7 +64,7 @@ function App() {
             <Rentals rentals={rentals} setRentals={setRentals} selectedUser={selectedUser} selectedBook={selectedBook} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
           </Route>
           <Route path="/book/:bookId">
-            <BookUpdate books={books} setBooks={setBooks} selectedUser={selectedUser} selectedBook={selectedBook} setSelectedBook={setSelectedBook} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
+            <BookUpdate books={books} refreshPage={refreshPage} setRefreshPage={setRefreshPage}/>
           </Route>
         </Switch>
       </BrowserRouter>

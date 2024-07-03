@@ -4,9 +4,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 
-function BookUpdate({books, setBooks, selectedUser, selectedBook, setSelectedBook, refreshPage, setRefreshPage}) {
+function BookUpdate({books, refreshPage, setRefreshPage}) {
 
     let { bookId } = useParams()
+
+    const found = books.find((book) => book.id === parseInt(bookId))
 
     const formSchema = yup.object().shape({
         title: yup.string(),
@@ -47,9 +49,9 @@ function BookUpdate({books, setBooks, selectedUser, selectedBook, setSelectedBoo
           });
         },
       });
-    
+
       return (
-        <div>
+        found ? (<div>
           <h3>Update Book</h3>
           <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
             <label htmlFor="title">Title</label>
@@ -76,7 +78,7 @@ function BookUpdate({books, setBooks, selectedUser, selectedBook, setSelectedBoo
     
             <button type="submit">Submit</button>
           </form>
-        </div>
+        </div>) : <h2>Book Not Found</h2>
       );
     }
 
