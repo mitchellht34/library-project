@@ -13,16 +13,16 @@ function NavBar() {
         Home
       </NavLink>
       <NavLink
-        to="/1"
+        to="/users"
         style={{ marginRight: "10px" }}
       >
-        Search
+        Users
       </NavLink>
       <NavLink
-        to="/2"
+        to="/books"
         style={{ marginRight: "10px" }}
       >
-        My Favorites
+        Books
       </NavLink>
     </div>
   );
