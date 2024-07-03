@@ -37,7 +37,6 @@ class Rental(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     copies = db.Column(db.Integer)
-    rental_date = db.Column(db.DateTime)
 
     # Foreign key to store the user id
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

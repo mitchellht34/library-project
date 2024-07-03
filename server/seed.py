@@ -17,11 +17,13 @@ if __name__ == '__main__':
         print("Starting seed...")
         # Seed code goes here!
         
+        # db.create_all()
+
         User.query.delete()
         Book.query.delete()
         Rental.query.delete()
 
-        # db.create_all()
+        db.create_all()
 
         u1 = User(name = "Joe")
         u2 = User(name = "Angelika")
@@ -31,9 +33,9 @@ if __name__ == '__main__':
         b2 = Book(title = "Lord of the Flies", author = "William Golding")
         b3 = Book(title = "To Kill a Mockingbird", author = "Harper Lee")
 
-        r1 = Rental(copies = 2, rental_date = datetime.datetime(2023, 2, 1), user = u1, book = b1)
-        r2 = Rental(copies = 1, rental_date = datetime.datetime(2023, 6, 1), user = u2, book = b2)
-        r3 = Rental(copies = 1, rental_date = datetime.datetime(2023, 6, 8), user = u2, book = b3)
+        r1 = Rental(copies = 2, user = u1, book = b1)
+        r2 = Rental(copies = 1, user = u2, book = b2)
+        r3 = Rental(copies = 1, user = u2, book = b3)
 
         db.session.add_all([u1, u2, u3])
         db.session.add_all([b1, b2, b3])
